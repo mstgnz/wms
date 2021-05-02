@@ -1,4 +1,5 @@
 import os, sys
+from decouple import config
 
 # __pycache__ folder ignored.
 sys.dont_write_bytecode = True
@@ -10,12 +11,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'g52wd-g3ld+6*bkre31#xg2q-)(f8tbh4suln!#g&w9x0v3__b'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 # Application definition
 INSTALLED_APPS = [
@@ -75,14 +76,13 @@ WSGI_APPLICATION = 'worksite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE'   : 'django.db.backends.mysql',
-        'NAME'     : 'worksite',
-        'HOST'     : '127.0.0.1',
-        'USER'     : 'root',
-        'PASSWORD' : 'Mes1a3*2'
+        'ENGINE'   : 'django.db.backends.postgresql_psycopg2',
+        'NAME'     : config('POSTGRES_DB'),
+        'HOST'     : config('POSTGRES_HOST'),
+        'USER'     : config('POSTGRES_USER'),
+        'PASSWORD' : config('POSTGRES_PASSWORD'),
+        'PORT'     : config('POSTGRES_PORT')
     }
-    # eğer bu hatayı alırsan : NameError: name '_mysql' is not defined
-    # çalıştır : export DYLD_LIBRARY_PATH=/usr/local/mysql/lib/
 }
 
 # Password validation
