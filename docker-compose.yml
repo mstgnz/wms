@@ -32,7 +32,7 @@ services:
     image: mysql
     restart: always
     env_file:
-      - mysql.env
+      - .env-mysql
     networks:
       - worksite_network
     volumes:
