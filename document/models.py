@@ -8,6 +8,7 @@ from django.core.validators import RegexValidator
 
 # TUTANAK
 class Minutes(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name='minutes', on_delete=models.CASCADE)
     no = models.IntegerField(default=1, verbose_name="Tutanak No")
     subject = models.CharField(max_length=50, verbose_name="Konu")
@@ -38,6 +39,7 @@ class Minutes(models.Model):
 
 
 class Writing(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name='writings', on_delete=models.CASCADE)
     no = models.IntegerField(default=1, verbose_name="Üst Yazı No")
     subject = models.CharField(max_length=50, verbose_name="Üst Yazı Konu")
@@ -63,6 +65,7 @@ class Writing(models.Model):
 
 
 class DailyReport(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name='daily_reports', on_delete=models.CASCADE)
     date = models.DateField(verbose_name="Tarih")
     works = models.CharField(max_length=20, verbose_name="Çalışma Saatleri")

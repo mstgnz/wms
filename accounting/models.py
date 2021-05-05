@@ -10,6 +10,7 @@ import calendar
 
 # İRSALİYE
 class Waybill(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name='waybills', on_delete=models.CASCADE)
     vendor = models.CharField(max_length=50, verbose_name="Satıcı Firma")
     waybill_no = models.CharField(max_length=15, verbose_name="İrsaliye No")
@@ -41,6 +42,7 @@ class Waybill(models.Model):
 
 # İRSALİYE MALZEME LİSTESİ
 class WaybillMaterial(models.Model):
+    id = models.AutoField(primary_key=True)
     waybill = models.ForeignKey('Waybill', verbose_name='İrsaliye', related_name="waybill_materials", on_delete=models.CASCADE)
     name = models.CharField(max_length=40, verbose_name='Malzeme Adı')
     unit = models.CharField(max_length=10, verbose_name="Birim")
@@ -59,6 +61,7 @@ class WaybillMaterial(models.Model):
 
 # İŞÇİ
 class Worker(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name='workers', on_delete=models.CASCADE)
     subcontractor = models.ForeignKey('firm.Subcontractor', verbose_name="Taşeron", related_name="workers", on_delete=models.CASCADE)
     full_name = models.CharField(max_length=30, verbose_name="Ad Soyad")
@@ -95,6 +98,7 @@ def max_value_current_year(value):
 class Tally(models.Model):
     YEAR_CHOICES = [(i,i) for i in range(2017, datetime.date.today().year+1)]
     MONTH_CHOICES = [(str(i), calendar.month_name[i]) for i in range(1,13)]
+    id = models.AutoField(primary_key=True)
     worker = models.ForeignKey('Worker', verbose_name='Personel', related_name='tally', on_delete=models.CASCADE)
     year = models.CharField(max_length=4, choices=YEAR_CHOICES, default=current_year, verbose_name="Yıl")
     month = models.CharField(max_length=9, choices=MONTH_CHOICES, default='1', verbose_name="Ay")
@@ -119,6 +123,7 @@ class Tally(models.Model):
 
 # SİPARİŞ
 class Order(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name='orders', on_delete=models.CASCADE)
     orderer = models.CharField(max_length=20, verbose_name="Sipariş Veren")
     deadline = models.DateField(verbose_name="Termin Tarihi")
@@ -139,6 +144,7 @@ class Order(models.Model):
 
 # SİPARİŞ MALZEME LİSTESİ
 class OrderMaterial(models.Model):
+    id = models.AutoField(primary_key=True)
     order = models.ForeignKey('Order', verbose_name='Sipariş', related_name="order_materials", on_delete=models.CASCADE)
     name = models.CharField(max_length=40, verbose_name='Malzeme Adı')
     unit = models.CharField(max_length=10, verbose_name="Birim")

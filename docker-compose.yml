@@ -1,46 +1,48 @@
 version: '3'
 services: 
   djangoapp:
+    container_name: django-app
     build: .
     volumes:
       - .:/code
       - static_volume:/opt/services/djangoapp/static
       - media_volume:/opt/services/djangoapp/media
     networks:
-      - nginx_network
-      - databasepostgresql_network
+      - worksite_network
     depends_on:
-      - databasepostgresql
+      - mysql
 
   nginx:
-    image: nginx:1.13
+    container_name: django-nginx
+    image: nginx
     ports:
       - 8000:80
     volumes:
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - nginx-conf.d:/etc/nginx/conf.d
       - static_volume:/opt/services/djangoapp/static
       - media_volume:/opt/services/djangoapp/media
     depends_on:
       - djangoapp
     networks:
-      - nginx_network
+      - worksite_network
    
-  databasepostgresql:
-    image: postgres:10
+  mysql:
+    container_name: django-mysql
+    platform: linux/x86_64
+    image: mysql
+    restart: always
     env_file:
-      - .env
+      - mysql.env
     networks:
-      - databasepostgresql_network
+      - worksite_network
     volumes:
-      - databasepostgresql_volume:/var/lib/postgresql/data
+      - mysql_volume:/etc/mysql/conf.d
    
 networks:
-  nginx_network:
-    driver: bridge
-  databasepostgresql_network:
+  worksite_network:
     driver: bridge
 
 volumes:
-  databasepostgresql_volume:
+  mysql_volume:
   static_volume:
   media_volume:

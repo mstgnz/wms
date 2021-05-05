@@ -8,6 +8,7 @@ from django.core.validators import RegexValidator
 
 # FİRMA
 class Firm(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=50, verbose_name="Firma Adı")
     slug = models.SlugField(unique=True, editable=False, max_length=50)
     full_name = models.CharField(max_length=255, verbose_name="Firma Tam Adı")
@@ -59,6 +60,7 @@ class Firm(models.Model):
 
 # ŞANTİYE
 class Worksite(models.Model):
+    id = models.AutoField(primary_key=True)
     firm = models.ForeignKey('Firm', verbose_name='Firma', related_name="worksites", on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50, verbose_name="Şantiye Adı")
     slug = models.SlugField(unique=True, editable=False, max_length=50)
@@ -113,6 +115,7 @@ class Worksite(models.Model):
 
 # TAŞERON
 class Subcontractor(models.Model):
+    id = models.AutoField(primary_key=True)
     firm = models.ForeignKey('Firm', verbose_name='Firma', related_name="subcontractors", on_delete=models.CASCADE)
     worksite = models.ManyToManyField('Worksite', related_name="subcontractors", verbose_name='Şantiye')
     # Taşeron bir firma ise ve ilerde bu sistemi kullanırsa vergi no ile eşlerek şantiyesine eklenecektir.
@@ -139,6 +142,7 @@ class Subcontractor(models.Model):
 
 # SÖZLEŞME
 class Contract(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('Worksite', verbose_name='Şantiye', related_name="contracts", on_delete=models.CASCADE)
     subcontractor = models.ForeignKey('Subcontractor', blank=True, null=True, verbose_name='Taşeron', related_name="subcontractors", on_delete=models.CASCADE)
     no = models.CharField(max_length=10, verbose_name="Sözleşme No")
@@ -170,6 +174,7 @@ class Contract(models.Model):
 
 # ŞARTNAME
 class Specification(models.Model):
+    id = models.AutoField(primary_key=True)
     contract = models.ForeignKey('Contract', verbose_name='Sözleşme', related_name="specifications", on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name="Şartname Adı")
     file = models.FileField(verbose_name='Şartname', help_text="İmzalı şartnameyi PDF olarak yükleyiniz.")
@@ -197,6 +202,7 @@ class Project(models.Model):
         ("Elektrik", "Elektrik"),
         ("Peyzaj", "Peyzaj")
     )
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('Worksite', verbose_name='Şantiye', related_name="projects", on_delete=models.CASCADE)
     no = models.CharField(max_length=10, verbose_name="Revize No")
     name = models.CharField(max_length=50, verbose_name="Proje Adı")

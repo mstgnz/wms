@@ -8,6 +8,7 @@ from django.core.validators import RegexValidator, MinValueValidator, MaxValueVa
 
 # KEŞİF
 class Discovery(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name="discoveries", on_delete=models.CASCADE)
     no = models.CharField(max_length=50, verbose_name="Poz No")
     name = models.CharField(max_length=500, verbose_name="Poz Adı")
@@ -28,6 +29,7 @@ class Discovery(models.Model):
 
 # ANALİZ
 class Analysis(models.Model):
+    id = models.AutoField(primary_key=True)
     discovery = models.ForeignKey('Discovery', verbose_name='Keşif', related_name="analysis", on_delete=models.CASCADE)
     detail = models.TextField(max_length=2500, blank=True, null=True, verbose_name='Poz Detayı')
     profit = models.FloatField(default=0, verbose_name="Müteahhitlik Kârı")
@@ -50,6 +52,7 @@ class Analysis(models.Model):
 
 # ANALİZ DETAY
 class AnalysisDetail(models.Model):
+    id = models.AutoField(primary_key=True)
     analysis = models.ForeignKey('Analysis', verbose_name='Analiz', related_name="analysis_detail", on_delete=models.CASCADE)
     category = models.CharField(max_length=15, verbose_name="Kategori")
     definition = models.CharField(max_length=100, verbose_name='Tanım')
@@ -68,6 +71,7 @@ class AnalysisDetail(models.Model):
 
 # HAKEDİŞ
 class Progress(models.Model):
+    id = models.AutoField(primary_key=True)
     worksite = models.ForeignKey('firm.Worksite', verbose_name='Şantiye', related_name="progress", on_delete=models.CASCADE)
     subcontractor = models.ForeignKey('firm.Subcontractor', blank=True, null=True, verbose_name='Taşeron', related_name="progress", on_delete=models.CASCADE)
     employer = models.CharField(max_length=30, verbose_name='İşveren')
@@ -112,6 +116,7 @@ class Progress(models.Model):
 
 # HAKEDİŞ İCMAL
 class Synopsis(models.Model):
+    id = models.AutoField(primary_key=True)
     progress = models.ForeignKey('Progress', verbose_name='Hakediş', related_name="synopsis", on_delete=models.CASCADE)
     pose_no = models.CharField(max_length=10, verbose_name="Poz No")
     name = models.CharField(max_length=50, verbose_name="Poz Adı")

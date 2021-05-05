@@ -27,6 +27,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    id = models.AutoField(primary_key=True)
     firm = models.ForeignKey('firm.Firm', blank=True, null=True, related_name='users', on_delete=models.CASCADE)
     worksite = models.ManyToManyField('firm.Worksite', blank=True, verbose_name='Şantiye')
     email = models.EmailField(unique=True, max_length=255)
@@ -75,6 +76,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 # BÜTÜN MODELLERİN İŞLEMLERİNİ KAYIT ALTINA ALACAĞIZ. HER MODEL İÇİN SİNYAL (SİGNAL) TANIMLANACAKTIR.
 class Logger(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey('User', verbose_name='User', related_name='loggers', on_delete=models.CASCADE)
     name = models.CharField(max_length=20, verbose_name='Tablo Adı')
     row = models.BigIntegerField(verbose_name='Tablo ID')
