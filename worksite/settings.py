@@ -16,7 +16,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -76,13 +76,14 @@ WSGI_APPLICATION = 'worksite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE'   : 'django.db.backends.mysql',
-        'NAME'     : 'worksite',
-        'HOST'     : '127.0.0.1',
-        'USER'     : 'root',
-        'PASSWORD' : config('MYSQL_ROOT_PASSWORD'),
-        'PORT'     : '3306'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'worksite',
+        'HOST': 'mysql',  # docker-compose in service name
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'PORT': '3306'
     }
+    # venv üzerinden çalıştırırken
     # eğer bu hatayı alırsan : NameError: name '_mysql' is not defined
     # çalıştır : export DYLD_LIBRARY_PATH=/usr/local/mysql/lib/
 }
@@ -131,21 +132,22 @@ LOGIN_EXEMPT_URLS = (
 )
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # collectstatic çalıştırılırken deaktif edilecektir. Localhostta aktif
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static/') # collectstatic çalıştırılırken aktif edilecektir. Sunucuda aktif
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')]  # collectstatic çalıştırılırken deaktif edilecektir. Localhostta aktif
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/') # collectstatic çalıştırılırken aktif edilecektir. Sunucuda aktif
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 GRAPHENE = {
-    'SCHEMA': 'worksite.schema.schema' # Where your Graphene schema lives
+    'SCHEMA': 'worksite.schema.schema'  # Where your Graphene schema lives
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES':(
+    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES':(
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -154,17 +156,17 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
         'api.throttles.PostThrottle'
     ],
-    'DEFAULT_THROTTLE_RATES':{
+    'DEFAULT_THROTTLE_RATES': {
         'toManyRequest': '5/second',
         'toManyPost': '2/second'
     }
 }
 
-#CACHES = {
+# CACHES = {
 #    'default': {
 #        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
 #        'LOCATION': '127.0.0.1:11211',
 #    }
-#}
+# }
 
 # Dependencies -> mysqlclient, Pillow, django_cleanup, graphene_django, djangorestframework

@@ -16,11 +16,11 @@ services:
     container_name: django-nginx
     image: nginx
     ports:
-      - 8000:80
+      - "8000:80"
     volumes:
-      - nginx-conf.d:/etc/nginx/conf.d
       - static_volume:/opt/services/djangoapp/static
       - media_volume:/opt/services/djangoapp/media
+      - ./nginx-conf:/etc/nginx/conf.d
     depends_on:
       - djangoapp
     networks:
@@ -37,6 +37,7 @@ services:
       - worksite_network
     volumes:
       - mysql_volume:/etc/mysql/conf.d
+      - ./mysql:/docker-entrypoint-initdb.d
    
 networks:
   worksite_network:
