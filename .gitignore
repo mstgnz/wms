@@ -1,9 +1,9 @@
 .DS_Store
-media/
 .idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 static/admin/
+static/rest_framework/
 *.py[cod]
 *$py.class
 

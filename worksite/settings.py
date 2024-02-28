@@ -132,9 +132,8 @@ LOGIN_EXEMPT_URLS = (
 )
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')]  # collectstatic çalıştırılırken deaktif edilecektir. Localhostta aktif
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/') # collectstatic çalıştırılırken aktif edilecektir. Sunucuda aktif
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # collectstatic çalıştırılırken deaktif edilecektir. Localhostta aktif
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/') # collectstatic çalıştırılırken aktif edilecektir. Sunucuda aktif
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
