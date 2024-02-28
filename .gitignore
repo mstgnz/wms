@@ -3,7 +3,6 @@ media/
 .idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
-migrations/
 static/admin/
 *.py[cod]
 *$py.class
@@ -107,3 +106,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+**/migrations/*
+!**/migrations/__init__.py

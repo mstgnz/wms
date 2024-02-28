@@ -1,12 +1,12 @@
 version: '3'
 services: 
-  djangoapp:
+  wms:
     build: .
     container_name: wms
     volumes:
       - .:/code
-      - static_volume:/opt/services/djangoapp/static
-      - media_volume:/opt/services/djangoapp/media
+      - static_volume:/opt/services/wms/static
+      - media_volume:/opt/services/wms/media
     networks:
       - worksite_network
     depends_on:
@@ -14,22 +14,22 @@ services:
 
   nginx:
     image: nginx
-    container_name: django-nginx
+    container_name: wms-nginx
     ports:
       - "8000:80"
     volumes:
-      - static_volume:/opt/services/djangoapp/static
-      - media_volume:/opt/services/djangoapp/media
+      - static_volume:/opt/services/wms/static
+      - media_volume:/opt/services/wms/media
       - ./nginx-conf:/etc/nginx/conf.d
     depends_on:
-      - djangoapp
+      - wms
     networks:
       - worksite_network
    
   mysql:
     image: mysql
     platform: linux/x86_64
-    container_name: django-mysql
+    container_name: wms-mysql
     restart: always
     ports:
       - "3306:3306"

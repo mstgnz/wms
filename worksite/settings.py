@@ -78,9 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'worksite',
-        'HOST': 'mysql',  # docker-compose in service name
-        'USER': 'root',
-        'PASSWORD': 'password',
+        'HOST': 'wms-mysql',  # docker-compose in service name
+        'USER': config('MYSQL_ROOT_USER'),
+        'PASSWORD': config('MYSQL_ROOT_PASSWORD'),
         'PORT': '3306'
     }
     # venv üzerinden çalıştırırken
