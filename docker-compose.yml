@@ -31,6 +31,8 @@ services:
     platform: linux/x86_64
     container_name: django-mysql
     restart: always
+    ports:
+      - "3306:3306"
     env_file:
       - .env
     networks:
