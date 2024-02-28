@@ -1,8 +1,8 @@
 version: '3'
 services: 
   djangoapp:
-    container_name: django-app
     build: .
+    container_name: wms
     volumes:
       - .:/code
       - static_volume:/opt/services/djangoapp/static
@@ -13,8 +13,8 @@ services:
       - mysql
 
   nginx:
-    container_name: django-nginx
     image: nginx
+    container_name: django-nginx
     ports:
       - "8000:80"
     volumes:
@@ -27,9 +27,9 @@ services:
       - worksite_network
    
   mysql:
-    container_name: django-mysql
-    platform: linux/x86_64
     image: mysql
+    platform: linux/x86_64
+    container_name: django-mysql
     restart: always
     env_file:
       - .env
